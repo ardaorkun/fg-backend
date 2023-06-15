@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const dotenv = require('dotenv').config()
 const { connectDB } = require('./config/database')
 const user = require('./route/user')
@@ -8,6 +9,7 @@ const game = require('./route/game')
 const errorHandler = require('./middleware/errorHandler')
 
 const app = express()
+app.use(cors())
 const port = process.env.PORT
 
 connectDB()

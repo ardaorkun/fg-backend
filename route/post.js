@@ -1,5 +1,5 @@
 const express = require('express')
-const { createPost, likePost, dislikePost, getPost, updatePost, deletePost, getLatestPosts, getPopularPosts, createComment, updateComment, deleteComment } = require('../controller/post')
+const { createPost, likePost, dislikePost, getPost, updatePost, deletePost, getLatestPosts, getPopularPosts, createComment, updateComment, deleteComment, getPostsOf } = require('../controller/post')
 const router = express.Router()
 const validateToken = require('../middleware/validateToken')
 
@@ -12,6 +12,7 @@ router.delete('/delete/:id', deletePost)   //@desc For user to delete his/her po
 router.get('/get/latest', getLatestPosts)   //@desc For users to get latest posts.
 router.get('/get/popular', getPopularPosts)   //@desc For users to get popular posts.
 router.get('/get/:id', getPost)   //@desc For users to get a post.
+router.get('/get/author/:id', getPostsOf)   //@desc Returns posts of a certain user.
 
 router.put('/like/:id', likePost)   //@desc For users to like a post.
 router.put('/dislike/:id', dislikePost)   //@desc For users to dislike a post.

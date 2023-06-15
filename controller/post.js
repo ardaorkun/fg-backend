@@ -155,6 +155,33 @@ const getPopularPosts = async (req, res, next) => {
     }
 }
 
+//@desc GET POSTS OF AN USER (SORTED BY THE DATE)
+//@route GET /api/post/get/author/:id
+//@access PRIVATE
+const getPostsOf = async (req, res, next) => {
+    try {
+        const userID = req.params.id
+        const posts = await Post.find({ author: userID })
+            .sort({ createdAt: -1 })
+            .select('-__v')
+            .populate('author', 'username')
+            .populate('game', "id name release_year")
+            .populate('likes', 'username -_id')
+            .populate({
+                path: 'comments',
+                select: '_id content',
+                populate: {
+                    path: 'author',
+                    model: 'User',
+                    select: '_id username'
+                }
+            })
+        res.status(200).json(posts)
+    } catch (error) {
+        next(error)
+    }
+}
+
 //@desc LIKE A POST
 //@route PUT /api/post/like
 //@access PRIVATE
@@ -266,5 +293,6 @@ module.exports = {
     getPopularPosts,
     createComment,
     updateComment,
-    deleteComment
+    deleteComment,
+    getPostsOf
 }

@@ -38,9 +38,10 @@ const login = async (req, res, next) => {
                 user: {
                     username: user.username,
                     id: user.id,
-                    role: user.role
+                    role: user.role,
+                    createdAt: user.createdAt
                 }
-            }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
+            }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '60m' })
             res.status(200).json({ token })
         } else {
             const error = new Error('Wrong credentials.')
