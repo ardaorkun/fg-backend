@@ -169,7 +169,7 @@ const getPostsOf = async (req, res, next) => {
             .populate('likes', 'username -_id')
             .populate({
                 path: 'comments',
-                select: '_id content',
+                select: '_id content createdAt',
                 populate: {
                     path: 'author',
                     model: 'User',
