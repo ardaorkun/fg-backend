@@ -116,7 +116,7 @@ const getLatestPosts = async (req, res, next) => {
             .populate('likes', 'username -_id')
             .populate({
                 path: 'comments',
-                select: '_id content',
+                select: '_id content createdAt',
                 populate: {
                     path: 'author',
                     model: 'User',
@@ -142,7 +142,7 @@ const getPopularPosts = async (req, res, next) => {
             .populate('likes', 'username -_id')
             .populate({
                 path: 'comments',
-                select: '_id content',
+                select: '_id content createdAt',
                 populate: {
                     path: 'author',
                     model: 'User',
@@ -232,7 +232,7 @@ const createComment = async (req, res, next) => {
         }
         const comment = await Comment.create({ author: userID, postID, content })
         await Post.findByIdAndUpdate(postID, { $push: { comments: comment._id } })
-        res.status(201).json({ created: true })
+        res.status(201).json(comment)
     } catch (error) {
         next(error)
     }
