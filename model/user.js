@@ -20,6 +20,9 @@ const user = mongoose.Schema({
         min: 1,
         max: 3,
         default: 1 // 1: User 2: Producer 3: Admin
+    },
+    gender: {
+        type: String,
     }
 }, { timestamps: true })
 
